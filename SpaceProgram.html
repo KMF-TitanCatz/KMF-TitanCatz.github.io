@@ -1,0 +1,184 @@
+<!--Aislinn Meeker
+    Assignment 7 Buttons-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAT Space Program</title>
+
+    <!--JavaScript File-->
+    <script src="SpaceProgramJava.js"></script>
+    <script src="dataLoader.js"></script>
+
+    <!--Background and Styling-->
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    
+    <!--Table-->
+    <table class="SpaceTable">
+        <tr>
+            <td>
+                    <!--Imgage and header-->
+                    <h1>
+                        <img src="UATspaceLogo-2.jpg" />
+                        UAT Space Program
+                    </h1>
+            </td>
+        </tr>
+    </table>
+
+    <!--Table Data-->
+    <table id="data" border="2" width="85%">
+        <!--Collumn Width-->
+        <col style="width: 50%;">
+        <col style="width: 50%;">
+
+        <!--Collumn Headers-->
+        <thead>
+            <tr style="font-family:Georgia, 'Times New Roman', Times, serif">
+                <th>Data Type</th>
+                <th>Reading</th>
+            </tr>
+        </thead>
+
+        <!--Collumn Body-->
+        <tbody style="font-weight: bolder;">
+            <tr id="TimeElapsed"></tr>
+            <tr id="Latitude"></tr>
+            <tr id="Longitude"></tr>
+            <tr id="GPSAltitude"></tr>
+            <tr id="BMPSensorAltitude"></tr>
+            <tr id="BMPSensorePressure"></tr>
+            <tr id="BMPSensorTemperature"></tr>
+            <tr id="DigitalSensorTemperature"></tr>
+            <tr id="CSSSensorTemperature"></tr>
+            <tr id="CSSSensoreCO2"></tr>
+            <tr id="CSSSensorTVOC"></tr>
+            <tr id="UV"></tr>
+            <tr id="AccelX"></tr>
+            <tr id="AccelY"></tr>
+            <tr id="AccelZ"></tr>
+            <tr id="MagneticX"></tr>
+            <tr id="MagneticY"></tr>
+            <tr id="MagneticZ"></tr>
+            <tr id="GyroX"></tr>
+            <tr id="GyroY"></tr>
+            <tr id="GyroZ"></tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <p>
+    <!--Start/Stop Buttons-->
+    <input id="StartButton" type="button" value="Start" onClick="Start();" class="button"/>
+    <input id="StopButton" type="button" value="Stop" onClick="Stop();" disabled=true class="button"/>
+    </p>
+
+    <br>
+
+    <!--Back Button-->
+    <p>To get back to the home page click this buton</p>
+    <button onclick="Back()">Back</button>
+
+    <!--Script-->
+    <script>
+        //Variables
+        var TheTime = new Date();
+        var TempTime = new Date();
+        var TimeInterval = 5000;
+        var LastIteration = 0;
+        var Running = true;
+        var index = 0;
+        var Timer;
+
+        //Load Data
+        var data = GetData();
+
+        /****************************************
+         Functions
+        *****************************************/
+
+        //Update Display/Document
+        function UpdateDisplay() {
+            
+            TheTime = new Date();
+
+            //Debug
+            console.log(
+                "Display : " +
+                (TheTime.getHours() < 10 ? "0" + TheTime.getHours() : TheTime.getHours()) +
+                ":" + (TheTime.getMinutes() < 10 ? "0" + TheTime.getMinutes() : TheTime.getMinutes()) +
+                 ":" + (TheTime.getSeconds() < 10 ? "0" + TheTime.getSeconds() : TheTime.getSeconds())
+            );
+
+            //Varibles
+            var TimeRead = GetData(index).TimeSeconds;
+
+            //Table Update
+            document.getElementById("data").rows["TimeElapsed"].innerHTML = DataRow("Time elapsed", data[index]
+                .TimeElapsed, "seconds");
+            document.getElementById("data").rows["Latitude"].innerHTML = DataRow("Latitude", data[index].Latitude, " ");
+            document.getElementById("data").rows["Longitude"].innerHTML = DataRow("Longltude", data[index].Longitude,
+                " ");
+            document.getElementById("data").rows["GPSAltitude"].innerHTML = DataRow("GPS Altitude", data[index]
+                .GPSAltitude, " ");
+            document.getElementById("data").rows["BMPSensorAltitude"].innerHTML = DataRow("BMP Sensor Altitude", data[
+                index].BMPSensorAltitude, "");
+            document.getElementById("data").rows["BMPSensorePressure"].innerHTML = DataRow("BMP Sensor Pressure", data[
+                index].BMPSensorePressure, "");
+            document.getElementById("data").rows["BMPSensorTemperature"].innerHTML = DataRow("BMP Sensor Temperature", data[
+                index].BMPSensorTemperature, "");
+            document.getElementById("data").rows["DigitalSensorTemperature"].innerHTML = DataRow("Digital Sensor Temperature",
+                data[index].DigitalSensorTemperature, "");
+            document.getElementById("data").rows["CSSSensorTemperature"].innerHTML = DataRow("CSS Sensor Temperature", data[
+                index].CSSSensorTemperature, "");
+            document.getElementById("data").rows["CSSSensoreCO2"].innerHTML = DataRow("CSS Sensor eCO2", data[index]
+                .CSSSensoreCO2, "");
+            document.getElementById("data").rows["CSSSensorTVOC"].innerHTML = DataRow("CSS Sensor TVOC", data[index]
+                .CSSSensorTVOC, "");
+            document.getElementById("data").rows["UV"].innerHTML = DataRow("UV", data[index].UV, " ");
+            document.getElementById("data").rows["AccelX"].innerHTML = DataRow("Accel X", data[index].AccelX, " ");
+            document.getElementById("data").rows["AccelY"].innerHTML = DataRow("Accel Y", data[index].AccelY, " ");
+            document.getElementById("data").rows["AccelZ"].innerHTML = DataRow("Accel Z", data[index].AccelZ, " ");
+            document.getElementById("data").rows["MagneticX"].innerHTML = DataRow("Magnetic X", data[index].MagneticX,
+                " ");
+            document.getElementById("data").rows["MagneticY"].innerHTML = DataRow("Magnetic Y", data[index].MagneticY,
+                " ");
+            document.getElementById("data").rows["MagneticZ"].innerHTML = DataRow("Magnetic Z", data[index].MagneticZ,
+                " ");
+            document.getElementById("data").rows["GyroX"].innerHTML = DataRow("Gyro X", data[index].GyroX, " ");
+            document.getElementById("data").rows["GyroY"].innerHTML = DataRow("Gyro Y", data[index].GyroY, " ");
+            document.getElementById("data").rows["GyroZ"].innerHTML = DataRow("Gyro Z", data[index].GyroZ, " ");
+            
+            //if not end at keep going else stop updating table 
+            if (index < 499) {
+                index++;
+            } 
+            else {
+                index = 0;
+            }
+        }
+
+        //Stop the timer
+        function Stop() {
+            clearInterval(Timer);
+            document.getElementById("StartButton").disabled = false;
+            document.getElementById("StopButton").disabled = true;
+        }
+
+        //Start the timer
+        function Start() {
+            document.getElementById("data").rows["TimeElapsed"].innerHTML = "Reading data... One moment..."
+            index = 0;
+            Timer = setInterval(UpdateDisplay, TimeInterval);
+            document.getElementById("StartButton").disabled = true;
+            document.getElementById("StopButton").disabled = false;
+        }
+    </script>
+
+</body>
+</html>

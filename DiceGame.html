@@ -1,0 +1,69 @@
+<!--Aislinn Meeker
+    Assignment 3 Building Blocks-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat That</title>
+
+    <!--JavaScript File-->
+    <script src="DiceGameJava.js"></script>
+
+    <!--Background and Styling-->
+    <link href="StyleSheet.css" rel="stylesheet" type="text/css" />
+
+<!--Game Rules
+    Game: Beat That Modified
+    Four die
+    Two for computer
+    Two for User
+    Higher number win
+    Tie role again
+    -->
+
+</head>
+<body>
+    <!--Game name and discription-->
+    <h1>Beat That!</h1>
+    <br>
+    <p>Role against the computer. 
+    <br> 
+    Whoever has a higher sum of their dice wins!</p>
+    
+    <br>
+    
+    <!--Computer dice output-->
+    <div id="Computer"></div>
+    <div id="ComputerDie1"></div>
+    <div id="ComputerDie2"></div>
+    <div id="ComputerTotal"></div>
+
+    <br>
+
+    <!--Player dice output-->
+    <div id="User"></div>
+    <div id="UserDie1"></div>
+    <div id="UserDie2"></div>
+    <div id="UserTotal"></div>
+
+    <br>
+
+    <!--Results-->
+    <div id="Results"></div>
+
+    <br>
+
+    <!--Buttons-->
+    <input id="BeatThat" type="button" value="Roll" onClick="BeatThat();" class="button"/>
+
+    <br>
+    <br>
+
+     <!--Back Button-->
+    <p>To get back to the home page click this buton</p>
+    <button onclick="Back()">Back</button>
+
+</body>
+</html>
